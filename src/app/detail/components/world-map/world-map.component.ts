@@ -45,7 +45,7 @@ export class WorldMapComponent implements OnInit {
     this.worldMap = new jvm.Map({
       container: $('#world-map'),
       map: 'world_mill_en',
-      backgroundColor: "#3289a8",
+      backgroundColor: "#b8daff",
       series: {
         regions: [{
           attribute: 'fill',

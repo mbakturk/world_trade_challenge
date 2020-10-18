@@ -6,11 +6,15 @@ import {Country, CountryDict, Operation} from "../models/country";
 export class CountryService {
   private countriesUrl = 'assets/countries.json';
   private countryDict: CountryDict = {};
-  private readonly operationalCountryData: CountryDict = {};
+  private operationalCountryData: CountryDict = {};
 
   constructor(private http: HttpClient) {
+
+  }
+
+  load(): Promise<any> {
     this.operationalCountryData = this.getLocalStorageData();
-    this.fetchCountryList().subscribe((data: any) => {
+    return this.fetchCountryList().toPromise().then((data: any) => {
         this.countryDict = data;
       }
     );

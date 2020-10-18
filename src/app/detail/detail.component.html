@@ -1,7 +1,21 @@
 <header></header>
-<div class="container-md" style="background-color: red">
+<div class="container-md">
   <div class="map-container">
     <world-map [mapData]="mapData" (countryOperation)="handleOperation($event)"></world-map>
   </div>
-  <button (click)="openAddNoteModal()">Modal</button>
+  <div class="continent-container list-group">
+    <div class="list-group-item list-group-item-success"><b>Continents</b></div>
+    <a href="#" class="list-group-item list-group-item-action">Africa</a>
+    <a class="list-group-item list-group-item-action">Asia</a>
+    <a class="list-group-item list-group-item-action">Europe</a>
+    <a class="list-group-item list-group-item-action">North America</a>
+    <a class="list-group-item list-group-item-action">South America</a>
+    <a class="list-group-item list-group-item-action">Australia</a>
+  </div>
+  <div class="continent-container list-group">
+    <div class="list-group-item list-group-item-warning"><b>Statistics</b></div>
+    <div class="list-group-item list-group-item-action">Total Country Count: {{ countryCount }}</div>
+    <div class="list-group-item list-group-item-action">Export Ratio: {{exportCount}} / {{ countryCount }}</div>
+    <div class="list-group-item list-group-item-action">Import Ratio: {{importCount}} / {{ countryCount }}</div>
+  </div>
 </div>

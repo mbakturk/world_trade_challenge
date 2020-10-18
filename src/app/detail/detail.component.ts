@@ -14,12 +14,16 @@ import {AddNoteComponent} from "./components/add-note/add-note.component";
 export class DetailComponent implements OnInit {
 
   mapData: MapData;
+  countryCount: number
+  exportCount: number
+  importCount: number
 
   constructor(private countryService: CountryService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
-    this.mapData = this.getMapData();
+    this.countryCount = this.countryService.getCountyList().length;
+    this.updateData();
   }
 
   handleOperation(event: MapEvent) {
@@ -35,14 +39,30 @@ export class DetailComponent implements OnInit {
         this.countryService.deleteCountryData(event.countryCode);
         break;
     }
-    this.mapData = this.getMapData();
+    this.updateData();
   }
 
-  private getMapData(): MapData {
-    const data = {}
+  private updateData() {
+    const mapData = {}
+    let exportCount = 0;
+    let importCount = 0;
     Object.entries(this.countryService.getOperationalCountryData())
-      .forEach((item: [string, Country]) => data[item[0]] = item[1].operation ? item[1].operation : 'none');
-    return data;
+      .forEach((item: [string, Country]) => {
+          const operation = item[1].operation;
+          if (operation) {
+            if (operation === 'export') {
+              exportCount++;
+            } else {
+              importCount++;
+            }
+          }
+          mapData[item[0]] = operation;
+        }
+      );
+
+    this.mapData = mapData;
+    this.exportCount = exportCount;
+    this.importCount = importCount;
   }
 
   private openAddNoteModal(countryCode: string) {
