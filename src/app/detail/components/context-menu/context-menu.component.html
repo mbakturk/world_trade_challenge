@@ -1,0 +1,9 @@
+<div *ngIf="position" class="context-menu"
+     [ngStyle]="{'top.px':position.y, 'left.px':position.x}">
+  <div class="list-group">
+    <button class="list-group-item list-group-item-action" (click)="emitOperation('export')">Export</button>
+    <button class="list-group-item list-group-item-action" (click)="emitOperation('import')">Import</button>
+    <button class="list-group-item list-group-item-action" (click)="emitOperation('note')">Add Note</button>
+    <button class="list-group-item list-group-item-action" (click)="emitOperation('delete')">Delete All</button>
+  </div>
+</div>
