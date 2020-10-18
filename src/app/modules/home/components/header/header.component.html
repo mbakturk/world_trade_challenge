@@ -1,0 +1,37 @@
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+  <form class="form-inline small-size-search-box  flex-fill">
+    <input class="form-control w-100" type="text" name="search" placeholder="Search" aria-label="Search"
+           [ngModel]="search" (ngModelChange)="searchCountries($event)">
+  </form>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
+          aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav w-100">
+      <li class="nav-item">
+        <span class="navbar-brand mb-0 h1">mb.akturk@gmail.com</span>
+      </li>
+      <li class="nav-item big-size-search-box  flex-fill">
+        <form class="form-inline justify-content-md-center ">
+          <input id="search-box" class="form-control col-8" type="text" name="search" placeholder="Search"
+                 aria-label="Search" [ngModel]="search" (ngModelChange)="searchCountries($event)">
+        </form>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#">Log Out</a>
+      </li>
+    </ul>
+  </div>
+</nav>
+<div *ngIf="resultList.length > 0" class="sr-list">
+
+  <ul class="list-group list-group-flush ">
+    <li class="list-group-item list-group-item-light sr-result-header">
+      <span class="text-secondary">Results</span>
+      <button type="button" class="btn btn-link text-secondary" (click)="clearTextBox()">Clear</button>
+    </li>
+    <li *ngFor="let item of resultList" class="list-group-item"><a href="#">{{item[1]}}</a></li>
+  </ul>
+</div>
+

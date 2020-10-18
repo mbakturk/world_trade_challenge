@@ -1,0 +1,30 @@
+@import '~bootstrap/scss/functions.scss';
+@import "~bootstrap/scss/variables.scss";
+@import "~bootstrap/scss/mixins.scss";
+
+.sr-list {
+  background-color: white;
+  position: absolute;
+  width: 100%;
+
+  .sr-result-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.small-size-search-box {
+  display: none;
+  margin-right: 1rem;
+}
+
+@include media-breakpoint-down(sm) {
+  .small-size-search-box {
+    display: block;
+  }
+
+  .big-size-search-box {
+    display: none;
+  }
+}
