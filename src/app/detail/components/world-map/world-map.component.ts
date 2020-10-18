@@ -1,6 +1,8 @@
-import {Component, OnInit, Output, EventEmitter, ViewChild} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ViewChild, Input} from '@angular/core';
 import {ContextMenuComponent} from "../context-menu/context-menu.component";
-import {Operation} from "../../models/operation";
+import {MapEvent} from "../../models/map-event";
+import {Country, CountryDict} from "../../../core/models/country";
+import {MapData} from "../../models/map-data";
 
 declare var $: any;
 declare var jvm: any;
@@ -12,14 +14,26 @@ declare var jvm: any;
 })
 export class WorldMapComponent implements OnInit {
 
-  @Output() countryOperation: EventEmitter<Operation> = new EventEmitter<Operation>();
+  @Output() countryOperation: EventEmitter<MapEvent> = new EventEmitter<MapEvent>();
   @ViewChild(ContextMenuComponent) contextMenu: ContextMenuComponent;
   private worldMap: any;
   private hoveredCountry: Set<string> = new Set();
   private selectedCountry: string;
+  private series = {}
 
-
-  constructor() {
+  @Input()
+  set mapData(data: MapData) {
+    this.series = data;
+    console.log(data);
+    if (this.worldMap) {
+      const oldSeries = this.worldMap.series.regions[0].values;
+      Object.keys(oldSeries).forEach(key => {
+        if (!this.series[key]) {
+          this.series[key] = 'none';
+        }
+      })
+      this.worldMap.series.regions[0].setValues(this.series);
+    }
   }
 
   ngOnInit(): void {
@@ -36,11 +50,11 @@ export class WorldMapComponent implements OnInit {
         regions: [{
           attribute: 'fill',
           scale: {
-            exported: 'green',
-            imported: 'red',
+            export: 'green',
+            import: 'red',
             none: 'white',
           },
-          values: {}
+          values: this.series
         }]
       },
       onRegionOver: function (e, countryCode) {
@@ -62,7 +76,7 @@ export class WorldMapComponent implements OnInit {
     return false;
   }
 
-  handleCountryOperation(operation: string) {
+  handleCountryOperation(operation: any) {
     this.countryOperation.emit({
       operation: operation,
       countryCode: this.selectedCountry

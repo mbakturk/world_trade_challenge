@@ -13,12 +13,13 @@ export class HeaderComponent {
   resultList = [];
 
   constructor(private searchService: SearchService) {
-
   }
 
   searchCountries(name) {
     this.search = name;
-    this.resultList = this.searchService.findCountries(name);
+    if (name.length >= 3) {
+      this.resultList = this.searchService.findCountries(name);
+    }
   }
 
   clearTextBox() {

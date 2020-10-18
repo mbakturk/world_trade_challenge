@@ -1,6 +1,6 @@
 <header></header>
 <div class="container-md" style="background-color: red">
   <div class="map-container">
-    <world-map (countryOperation)="handleOperation($event)"></world-map>
+    <world-map [mapData]="mapData" (countryOperation)="handleOperation($event)"></world-map>
   </div>
 </div>

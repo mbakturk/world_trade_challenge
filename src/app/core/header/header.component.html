@@ -31,7 +31,7 @@
       <span class="text-secondary">Results</span>
       <button type="button" class="btn btn-link text-secondary" (click)="clearTextBox()">Clear</button>
     </li>
-    <li *ngFor="let item of resultList" class="list-group-item"><a href="#">{{item[1]}}</a></li>
+    <li *ngFor="let country of resultList" class="list-group-item"><a href="#">{{country.name}}</a></li>
   </ul>
 </div>
 

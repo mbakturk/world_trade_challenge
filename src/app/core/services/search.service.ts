@@ -1,29 +1,16 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {CountryService} from "./country.service";
+import {Country} from "../models/country";
 
 @Injectable()
 export class SearchService {
-  private countriesUrl = 'assets/countries.json';
-  private countryList = {};
+  constructor(private countryService: CountryService) {
 
-  constructor(private http: HttpClient) {
-    this.getCountries().subscribe(data => {
-        this.countryList = data;
-        console.log(data);
-      }
-    );
   }
 
   public findCountries(name: string): any {
-    if (name.length < 3) {
-      return [];
-    }
-    return Object.entries(this.countryList).filter((item: [string, string]) => {
-      return item[1].toLocaleLowerCase().includes(name.toLocaleLowerCase());
+    return this.countryService.getCountyList().filter((item: Country) => {
+      return item.name.toLocaleLowerCase().includes(name.toLocaleLowerCase());
     });
-  }
-
-  private getCountries() {
-    return this.http.get(this.countriesUrl);
   }
 }
