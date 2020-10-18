@@ -33,15 +33,31 @@ export class CountryService {
     this.pushToLocalStorage()
   }
 
+  private getOperationalDataOfCountry(countryCode: string): Country {
+    if (!this.operationalCountryData[countryCode]) {
+      this.operationalCountryData[countryCode] = {note: []} as any;
+    }
+    return this.operationalCountryData[countryCode];
+  }
+
   public getOperationalCountryData(): CountryDict {
     return this.operationalCountryData;
   }
 
-  private getOperationalDataOfCountry(countryCode: string): Country {
-    if (!this.operationalCountryData[countryCode]) {
-      this.operationalCountryData[countryCode] = {} as any;
-    }
-    return this.operationalCountryData[countryCode];
+  public getCountyList(): Country[] {
+    return Object.values(this.countryDict);
+  }
+
+  public getCountyDict(): CountryDict {
+    return this.countryDict;
+  }
+
+  public getCountryByCode(countryCode: string): Country {
+    return this.countryDict[countryCode] || {} as any;
+  }
+
+  private fetchCountryList() {
+    return this.http.get(this.countriesUrl);
   }
 
   private pushToLocalStorage() {
@@ -55,17 +71,5 @@ export class CountryService {
       return JSON.parse(initialData)
     }
     return {}
-  }
-
-  public getCountyList(): Country[] {
-    return Object.values(this.countryDict);
-  }
-
-  public getCountyDict(): CountryDict {
-    return this.countryDict;
-  }
-
-  private fetchCountryList() {
-    return this.http.get(this.countriesUrl);
   }
 }

@@ -3,6 +3,8 @@ import {MapEvent} from "./models/map-event";
 import {CountryService} from "../core/services/country.service";
 import {Country, CountryDict} from "../core/models/country";
 import {MapData} from "./models/map-data";
+import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
+import {AddNoteComponent} from "./components/add-note/add-note.component";
 
 @Component({
   selector: 'detail-page',
@@ -13,7 +15,7 @@ export class DetailComponent implements OnInit {
 
   mapData: MapData;
 
-  constructor(private countryService: CountryService) {
+  constructor(private countryService: CountryService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
@@ -27,7 +29,7 @@ export class DetailComponent implements OnInit {
         this.countryService.saveCountyOperation(event.countryCode, event.operation)
         break;
       case 'note':
-        console.log(event)
+        this.openAddNoteModal(event.countryCode);
         break;
       case 'delete':
         this.countryService.deleteCountryData(event.countryCode);
@@ -41,6 +43,13 @@ export class DetailComponent implements OnInit {
     Object.entries(this.countryService.getOperationalCountryData())
       .forEach((item: [string, Country]) => data[item[0]] = item[1].operation ? item[1].operation : 'none');
     return data;
+  }
+
+  private openAddNoteModal(countryCode: string) {
+    const modal = this.modalService.open(AddNoteComponent);
+    const country = this.countryService.getCountryByCode(countryCode);
+    modal.componentInstance.country = country.name;
+    modal.result.then(note => note && this.countryService.addNoteToCountry(countryCode, note), reason => false);
   }
 
 }

@@ -5,12 +5,14 @@ import {FormsModule} from '@angular/forms';
 import {CoreModule} from "../core/core.module";
 import { WorldMapComponent } from './components/world-map/world-map.component';
 import { ContextMenuComponent } from './components/context-menu/context-menu.component';
+import { AddNoteComponent } from './components/add-note/add-note.component';
 
 @NgModule({
   declarations: [
     DetailComponent,
     WorldMapComponent,
-    ContextMenuComponent
+    ContextMenuComponent,
+    AddNoteComponent
   ],
   imports: [
     BrowserModule,
