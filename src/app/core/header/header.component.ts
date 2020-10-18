@@ -1,9 +1,9 @@
-import {Component, Input} from '@angular/core';
-import {SearchService} from '../../../../core/services/search.service';
+import {Component} from '@angular/core';
+import {SearchService} from '../services/search.service';
 
 
 @Component({
-  selector: 'home-header',
+  selector: 'header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })

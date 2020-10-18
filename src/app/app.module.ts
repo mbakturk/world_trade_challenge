@@ -3,8 +3,7 @@ import {NgModule} from '@angular/core';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {FormsModule} from '@angular/forms';
-import {HomeModule} from './modules/home/home.module';
+import {DetailModule} from './detail/detail.module';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
 
@@ -17,9 +16,8 @@ import {CoreModule} from './core/core.module';
     HttpClientModule,
     AppRoutingModule,
     NgbModule,
-    FormsModule,
-    HomeModule,
-    CoreModule
+    CoreModule,
+    DetailModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,20 +1,20 @@
 import {NgModule} from '@angular/core';
-import {HeaderComponent} from './components/header/header.component';
-import {HomePage} from './pages/home/home.page';
+import {DetailComponent} from './detail.component';
 import {BrowserModule} from '@angular/platform-browser';
 import {FormsModule} from '@angular/forms';
+import {CoreModule} from "../core/core.module";
 
 @NgModule({
   declarations: [
-    HomePage,
-    HeaderComponent
+    DetailComponent
   ],
   imports: [
     BrowserModule,
     FormsModule,
+    CoreModule
   ],
-  exports: [HeaderComponent, HomePage],
+  exports: [DetailComponent],
 
 })
-export class HomeModule {
+export class DetailModule {
 }
