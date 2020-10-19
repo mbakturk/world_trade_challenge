@@ -8,7 +8,7 @@ export class SearchService {
 
   }
 
-  public findCountries(name: string): any {
+  findCountries(name: string): any {
     return this.countryService.getCountyList().filter((item: Country) => {
       return item.name.toLocaleLowerCase().includes(name.toLocaleLowerCase());
     });

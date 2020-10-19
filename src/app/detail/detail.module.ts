@@ -6,6 +6,7 @@ import {CoreModule} from "../core/core.module";
 import { WorldMapComponent } from './components/world-map/world-map.component';
 import { ContextMenuComponent } from './components/context-menu/context-menu.component';
 import { AddNoteComponent } from './components/add-note/add-note.component';
+import {RouterModule} from "@angular/router";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { AddNoteComponent } from './components/add-note/add-note.component';
   imports: [
     BrowserModule,
     FormsModule,
-    CoreModule
+    CoreModule,
+    RouterModule
   ],
   exports: [DetailComponent],
 

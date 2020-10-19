@@ -2,6 +2,11 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+.header-container {
+  margin-bottom: 2rem;
+}
+
+
 .sr-list {
   background-color: white;
   position: absolute;

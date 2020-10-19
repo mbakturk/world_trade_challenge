@@ -1,0 +1,26 @@
+<header></header>
+<div class="container-md">
+  <h1>{{ title }}</h1>
+  <div class="info-container">
+    <span><b>Total Export: </b>{{ exportCount }}</span>
+    <span><b>Total Import: </b>{{ importCount }}</span>
+  </div>
+  <div class="table-responsive-sm">
+    <table class="table table-striped">
+      <thead>
+      <tr>
+        <th class="country-column-width" scope="col">Country</th>
+        <th scope="col">Operation</th>
+        <th class="note-column-width" scope="col">Note</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr *ngFor="let view of countryViewModel; index as i">
+        <td>{{ view.flag + ' ' + view.country }}</td>
+        <td>{{ view.operation || '-' }}</td>
+        <td>{{ view.note || 'There is no note for this country'}}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -20,21 +20,25 @@ export class CountryService {
     );
   }
 
-  public saveCountyOperation(countryCode: string, operation: Operation) {
+  saveCountyOperation(countryCode: string, operation: Operation) {
     const data = this.getOperationalDataOfCountry(countryCode);
     data.operation = operation
     this.pushToLocalStorage()
   }
 
-  public addNoteToCountry(countryCode: string, note: string) {
+  addNoteToCountry(countryCode: string, note: string) {
     const data = this.getOperationalDataOfCountry(countryCode);
-    data.note.push(note);
+    data.note.push(note.trim());
     this.pushToLocalStorage()
   }
 
-  public deleteCountryData(countryCode: string) {
+  deleteCountryData(countryCode: string) {
     delete this.operationalCountryData[countryCode];
     this.pushToLocalStorage()
+  }
+
+  getCountriesByContinent(continentCode: string): Country[] {
+    return Object.values(this.countryDict).filter(country => country.continent === continentCode);
   }
 
   private getOperationalDataOfCountry(countryCode: string): Country {

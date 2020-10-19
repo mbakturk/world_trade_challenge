@@ -6,6 +6,7 @@ export interface Country {
   continent: string;
   note?: string[];
   operation?: Operation;
+  flag: string;
 }
 
 export interface CountryDict {

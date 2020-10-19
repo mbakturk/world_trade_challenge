@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {DetailModule} from './detail/detail.module';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
+import {ContinentModule} from "./continent/continent.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import {CoreModule} from './core/core.module';
     AppRoutingModule,
     NgbModule,
     CoreModule,
-    DetailModule
+    DetailModule,
+    ContinentModule
   ],
   providers: [],
   bootstrap: [AppComponent]
