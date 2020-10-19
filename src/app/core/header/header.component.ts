@@ -1,5 +1,6 @@
-import {Component} from '@angular/core';
+import {Component, EventEmitter, Output} from '@angular/core';
 import {SearchService} from '../services/search.service';
+import {Country} from "../models/country";
 
 
 @Component({
@@ -11,6 +12,8 @@ export class HeaderComponent {
 
   search = '';
   resultList = [];
+
+  @Output() selectedCountry: EventEmitter<Country> = new EventEmitter<Country>();
 
   constructor(private searchService: SearchService) {
   }
@@ -25,5 +28,10 @@ export class HeaderComponent {
   clearTextBox() {
     this.search = '';
     this.resultList = [];
+  }
+
+  selectCountry(country: Country) {
+    this.selectedCountry.emit(country);
+    this.clearTextBox()
   }
 }

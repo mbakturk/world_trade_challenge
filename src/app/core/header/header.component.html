@@ -26,12 +26,12 @@
 </nav>
 <div *ngIf="resultList.length > 0" class="sr-list">
 
-  <ul class="list-group list-group-flush ">
-    <li class="list-group-item list-group-item-light sr-result-header">
+  <div class="list-group list-group-flush ">
+    <div class="list-group-item list-group-item-light sr-result-header">
       <span class="text-secondary">Results</span>
       <button type="button" class="btn btn-link text-secondary" (click)="clearTextBox()">Clear</button>
-    </li>
-    <li *ngFor="let country of resultList" class="list-group-item"><a href="#">{{country.name}}</a></li>
-  </ul>
+    </div>
+    <button *ngFor="let country of resultList" class="list-group-item list-group-item-action" (click)="selectCountry(country)">{{country.name}}</button>
+  </div>
 </div>
 

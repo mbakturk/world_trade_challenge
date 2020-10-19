@@ -39,7 +39,7 @@ export class CountryService {
 
   private getOperationalDataOfCountry(countryCode: string): Country {
     if (!this.operationalCountryData[countryCode]) {
-      this.operationalCountryData[countryCode] = {note: []} as any;
+      this.operationalCountryData[countryCode] = {note: [], code: countryCode} as any;
     }
     return this.operationalCountryData[countryCode];
   }

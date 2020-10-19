@@ -1,4 +1,4 @@
-<header></header>
+<header (selectedCountry)="selectCountryOnTheMap($event)"></header>
 <div class="container-md">
   <div class="map-container">
     <world-map [mapData]="mapData" (countryOperation)="handleOperation($event)"></world-map>
@@ -14,7 +14,6 @@
   </div>
   <div class="continent-container list-group">
     <div class="list-group-item list-group-item-warning"><b>Statistics</b></div>
-    <div class="list-group-item list-group-item-action">Total Country Count: {{ countryCount }}</div>
     <div class="list-group-item list-group-item-action">Export Ratio: {{exportCount}} / {{ countryCount }}</div>
     <div class="list-group-item list-group-item-action">Import Ratio: {{importCount}} / {{ countryCount }}</div>
   </div>

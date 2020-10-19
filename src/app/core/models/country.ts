@@ -1,7 +1,7 @@
 export type Operation = 'import' | 'export';
 
 export interface Country {
-  code?: string;
+  code: string;
   name: string;
   continent: string;
   note?: string[];

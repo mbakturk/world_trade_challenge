@@ -11,13 +11,15 @@ const MENU_WIDTH = 200;
 export class ContextMenuComponent {
 
   position: { x: number, y: number };
+  title: string;
 
   @Output() operation: EventEmitter<string> = new EventEmitter<string>();
 
   constructor(private el: ElementRef) {
   }
 
-  show(position: Position) {
+  show(title: string, position: Position) {
+    this.title = title;
     this.position = position;
     this.position.x = (MENU_WIDTH + position.x) > window.innerWidth ? position.x - MENU_WIDTH : position.x;
   }

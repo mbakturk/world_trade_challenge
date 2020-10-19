@@ -1,10 +1,12 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {MapEvent} from "./models/map-event";
 import {CountryService} from "../core/services/country.service";
 import {Country, CountryDict} from "../core/models/country";
 import {MapData} from "./models/map-data";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AddNoteComponent} from "./components/add-note/add-note.component";
+import {ContextMenuComponent} from "./components/context-menu/context-menu.component";
+import {WorldMapComponent} from "./components/world-map/world-map.component";
 
 @Component({
   selector: 'detail-page',
@@ -14,9 +16,10 @@ import {AddNoteComponent} from "./components/add-note/add-note.component";
 export class DetailComponent implements OnInit {
 
   mapData: MapData;
-  countryCount: number
-  exportCount: number
-  importCount: number
+  countryCount: number;
+  exportCount: number;
+  importCount: number;
+  @ViewChild(WorldMapComponent) worldMap: WorldMapComponent;
 
   constructor(private countryService: CountryService, private modalService: NgbModal) {
   }
@@ -24,6 +27,10 @@ export class DetailComponent implements OnInit {
   ngOnInit(): void {
     this.countryCount = this.countryService.getCountyList().length;
     this.updateData();
+  }
+
+  selectCountryOnTheMap(country: Country) {
+    this.worldMap.selectCountryByCode(country.code)
   }
 
   handleOperation(event: MapEvent) {
@@ -46,9 +53,9 @@ export class DetailComponent implements OnInit {
     const mapData = {}
     let exportCount = 0;
     let importCount = 0;
-    Object.entries(this.countryService.getOperationalCountryData())
-      .forEach((item: [string, Country]) => {
-          const operation = item[1].operation;
+    Object.values(this.countryService.getOperationalCountryData())
+      .forEach(country => {
+          const operation = country.operation;
           if (operation) {
             if (operation === 'export') {
               exportCount++;
@@ -56,10 +63,10 @@ export class DetailComponent implements OnInit {
               importCount++;
             }
           }
-          mapData[item[0]] = operation;
+          mapData[country.code] = operation;
         }
       );
-
+    console.log(mapData)
     this.mapData = mapData;
     this.exportCount = exportCount;
     this.importCount = importCount;

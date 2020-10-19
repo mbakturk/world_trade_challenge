@@ -1,8 +1,10 @@
-import {Component, OnInit, Output, EventEmitter, ViewChild, Input} from '@angular/core';
+import {Component, OnInit, Output, EventEmitter, ViewChild, Input, ElementRef} from '@angular/core';
 import {ContextMenuComponent} from "../context-menu/context-menu.component";
 import {MapEvent} from "../../models/map-event";
 import {Country, CountryDict} from "../../../core/models/country";
 import {MapData} from "../../models/map-data";
+import {Position} from "../../models/position";
+import {ElementIdentifier} from "@angular/compiler-cli/src/ngtsc/indexer";
 
 declare var $: any;
 declare var jvm: any;
@@ -24,7 +26,7 @@ export class WorldMapComponent implements OnInit {
   @Input()
   set mapData(data: MapData) {
     this.series = data;
-    console.log(data);
+    // TODO: Refactor
     if (this.worldMap) {
       const oldSeries = this.worldMap.series.regions[0].values;
       Object.keys(oldSeries).forEach(key => {
@@ -36,8 +38,51 @@ export class WorldMapComponent implements OnInit {
     }
   }
 
+  constructor(private el: ElementRef) {
+  }
+
   ngOnInit(): void {
     this.drawMap();
+  }
+
+  selectCountryByCode(code) {
+    const position = this.getPositionOfCountryByCode(code);
+    if (position) {
+      setTimeout(() => this.openContextMenu(code, position), 100);
+    }
+  }
+
+  selectCountry(event) {
+    if (this.hoveredCountry.size === 0) {
+      return false
+    }
+    this.selectedCountry = this.hoveredCountry.values().next().value;
+    this.openContextMenu(this.selectedCountry, {x: event.pageX, y: event.pageY});
+    return false;
+  }
+
+  handleCountryOperation(operation: any) {
+    this.countryOperation.emit({
+      operation: operation,
+      countryCode: this.selectedCountry
+    })
+  }
+
+  private openContextMenu(code: string, position: Position) {
+    this.contextMenu.show(this.getCountryNameByCode(code), position);
+  }
+
+  private getCountryNameByCode(code: string): string {
+    return this.worldMap.regions[code].config.name
+  }
+
+  private getPositionOfCountryByCode(code: string): Position {
+    const pathEl = this.el.nativeElement.querySelector(`[data-code=${code}]`)
+    if (pathEl) {
+      const clientRects = pathEl.getClientRects()[0];
+      return {x: clientRects.x + clientRects.width / 2, y: clientRects.y + clientRects.height / 2}
+    }
+    return null;
   }
 
   private drawMap() {
@@ -65,22 +110,6 @@ export class WorldMapComponent implements OnInit {
         self.hoveredCountry.delete(countryCode)
       }
     });
-  }
-
-  selectCountry(event) {
-    if (this.hoveredCountry.size === 0) {
-      return false
-    }
-    this.selectedCountry = this.hoveredCountry.values().next().value;
-    this.contextMenu.show({x: event.pageX, y: event.pageY});
-    return false;
-  }
-
-  handleCountryOperation(operation: any) {
-    this.countryOperation.emit({
-      operation: operation,
-      countryCode: this.selectedCountry
-    })
   }
 
 }
