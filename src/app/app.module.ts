@@ -7,6 +7,8 @@ import {DetailModule} from './detail/detail.module';
 import {HttpClientModule} from '@angular/common/http';
 import {CoreModule} from './core/core.module';
 import {ContinentModule} from "./continent/continent.module";
+import {SignInModule} from "./sign-in/sign-in.module";
+import {SignOutModule} from "./sign-out/sign-out.module";
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import {ContinentModule} from "./continent/continent.module";
     NgbModule,
     CoreModule,
     DetailModule,
-    ContinentModule
+    ContinentModule,
+    SignInModule,
+    SignOutModule
   ],
   providers: [],
   bootstrap: [AppComponent]

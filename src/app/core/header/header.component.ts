@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Output} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SearchService} from '../services/search.service';
 import {Country} from "../models/country";
+import {AuthService} from "../services/auth.service";
 
 
 @Component({
@@ -8,14 +9,20 @@ import {Country} from "../models/country";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
 
-  search = '';
+  username;
+  search;
   resultList = [];
 
   @Output() selectedCountry: EventEmitter<Country> = new EventEmitter<Country>();
 
-  constructor(private searchService: SearchService) {
+  constructor(private searchService: SearchService, private authService: AuthService) {
+  }
+
+  ngOnInit(): void {
+    this.username = this.authService.getUser().getName();
+    console.log("detail", this.username);
   }
 
   searchCountries(name) {
@@ -34,4 +41,6 @@ export class HeaderComponent {
     this.selectedCountry.emit(country);
     this.clearTextBox()
   }
+
+
 }

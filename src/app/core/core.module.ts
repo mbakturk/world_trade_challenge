@@ -4,25 +4,32 @@ import {HeaderComponent} from "./header/header.component";
 import {BrowserModule} from "@angular/platform-browser";
 import {FormsModule} from "@angular/forms";
 import {CountryService} from "./services/country.service";
+import {AuthService} from "./services/auth.service";
+import {AuthGuard} from "./guard/auth.guard";
+import {RouterModule} from "@angular/router";
 
-function dataInit(countryService: CountryService) {
-  return () => countryService.load();
+function fetchDataAndInitAuth2(countryService: CountryService, authService: AuthService) {
+  return () => countryService.load().then(() => (authService.load()));
 }
+
 
 @NgModule({
   declarations: [HeaderComponent],
   imports: [
     BrowserModule,
-    FormsModule
+    FormsModule,
+    RouterModule
   ],
   providers: [
     SearchService,
     CountryService,
+    AuthService,
+    AuthGuard,
     {
       provide: APP_INITIALIZER,
-      useFactory: dataInit,
+      useFactory: fetchDataAndInitAuth2,
       multi: true,
-      deps: [CountryService]
+      deps: [CountryService, AuthService]
     }
   ],
   exports: [HeaderComponent],

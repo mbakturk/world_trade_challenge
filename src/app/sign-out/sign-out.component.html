@@ -1,0 +1,11 @@
+<div class="main-container container-md">
+  <div class="content-container text-center">
+    <div *ngIf="!isSignedOut">
+      <h2>You are signing out!</h2>
+    </div>
+    <div *ngIf="isSignedOut">
+      <h2>You signed out!</h2>
+      <a routerLink="/sign-in" type="button" class="btn btn-primary">Go to "Sign In" page</a>
+    </div>
+  </div>
+</div>

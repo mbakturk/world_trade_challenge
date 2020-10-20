@@ -36,7 +36,8 @@
               "node_modules/jquery/dist/jquery.slim.js",
               "node_modules/bootstrap/dist/js/bootstrap.min.js",
               "src/assets/jvectormap/jquery-jvectormap-2.0.5.min.js",
-              "src/assets/jvectormap/world.js"
+              "src/assets/jvectormap/world.js",
+              "src/assets/gapi_client.js"
             ]
           },
           "configurations": {

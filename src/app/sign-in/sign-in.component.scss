@@ -1,0 +1,13 @@
+.main-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.content-container {
+  max-width: 35rem;
+  h2 {
+    margin-bottom: 1rem;
+  }
+}

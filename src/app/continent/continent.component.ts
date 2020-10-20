@@ -24,7 +24,7 @@ interface CountryViewModel {
 }
 
 @Component({
-  selector: 'app-continent',
+  selector: 'continent',
   templateUrl: './continent.component.html',
   styleUrls: ['./continent.component.scss']
 })
