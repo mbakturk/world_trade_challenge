@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {CountryService} from "./country.service";
-import {Country} from "../models/country";
+import {CountryService} from './country.service';
+import {Country} from '../models/country';
 
 @Injectable()
 export class SearchService {

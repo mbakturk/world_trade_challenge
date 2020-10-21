@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {AuthService} from "../core/services/auth.service";
+import {AuthService} from '../core/services/auth.service';
 
 @Component({
-  selector: 'sign-out',
+  selector: 'app-sign-out',
   templateUrl: './sign-out.component.html',
   styleUrls: ['./sign-out.component.scss']
 })
@@ -14,7 +14,7 @@ export class SignOutComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authService.signOut().then(() => this.isSignedOut = true)
+    this.authService.signOut().then(() => this.isSignedOut = true);
   }
 
 }

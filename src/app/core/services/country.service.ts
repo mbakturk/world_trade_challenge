@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Country, CountryDict, Operation} from "../models/country";
+import {Country, CountryDict, Operation} from '../models/country';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class CountryService {
@@ -20,21 +21,21 @@ export class CountryService {
     );
   }
 
-  saveCountyOperation(countryCode: string, operation: Operation) {
+  saveCountyOperation(countryCode: string, operation: Operation): void {
     const data = this.getOperationalDataOfCountry(countryCode);
-    data.operation = operation
-    this.pushToLocalStorage()
+    data.operation = operation;
+    this.pushToLocalStorage();
   }
 
-  addNoteToCountry(countryCode: string, note: string) {
+  addNoteToCountry(countryCode: string, note: string): void {
     const data = this.getOperationalDataOfCountry(countryCode);
     data.note.push(note.trim());
-    this.pushToLocalStorage()
+    this.pushToLocalStorage();
   }
 
-  deleteCountryData(countryCode: string) {
+  deleteCountryData(countryCode: string): void {
     delete this.operationalCountryData[countryCode];
-    this.pushToLocalStorage()
+    this.pushToLocalStorage();
   }
 
   getCountriesByContinent(continentCode: string): Country[] {
@@ -64,20 +65,20 @@ export class CountryService {
     return this.countryDict[countryCode] || {} as any;
   }
 
-  private fetchCountryList() {
+  private fetchCountryList(): Observable<any> {
     return this.http.get(this.countriesUrl);
   }
 
-  private pushToLocalStorage() {
-    const serializedData = JSON.stringify(this.operationalCountryData)
-    localStorage.setItem("app-data", serializedData)
+  private pushToLocalStorage(): void {
+    const serializedData = JSON.stringify(this.operationalCountryData);
+    localStorage.setItem('app-data', serializedData);
   }
 
   private getLocalStorageData(): CountryDict {
-    const initialData = localStorage.getItem("app-data")
+    const initialData = localStorage.getItem('app-data');
     if (initialData) {
-      return JSON.parse(initialData)
+      return JSON.parse(initialData);
     }
-    return {}
+    return {};
   }
 }

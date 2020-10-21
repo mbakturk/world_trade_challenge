@@ -1,43 +1,43 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from "@angular/router";
-import {CountryService} from "../core/services/country.service";
+import {ActivatedRoute, Router} from '@angular/router';
+import {CountryService} from '../core/services/country.service';
+import {Country, CountryOpsConst} from '../core/models/country';
 
 const CONTINENT_DICT = {
-  'AF': 'Africa',
-  'AS': 'Asia',
-  'EU': 'Europe',
-  'NA': 'North America',
-  'SA': 'South America',
-  'OC': 'Australia'
-}
+  AF: 'Africa',
+  AS: 'Asia',
+  EU: 'Europe',
+  NA: 'North America',
+  SA: 'South America',
+  OC: 'Australia'
+};
 
 const OPERATION_DICT = {
   export: 'Export',
   import: 'Import'
-}
+};
 
 interface CountryViewModel {
-  flag: string,
-  country: string,
-  note?: string,
-  operation?: string
+  flag: string;
+  country: string;
+  note?: string;
+  operation?: string;
 }
 
 @Component({
-  selector: 'continent',
+  selector: 'app-continent',
   templateUrl: './continent.component.html',
   styleUrls: ['./continent.component.scss']
 })
 export class ContinentComponent implements OnInit {
 
   title: string;
-  countryViewModel: CountryViewModel[] = []
+  countryViewModel: CountryViewModel[] = [];
   exportCount = 0;
   importCount = 0;
+  private continentCode: string;
 
-  private continentCode: string
-
-  constructor(private route: ActivatedRoute, private countryService: CountryService) {
+  constructor(private route: ActivatedRoute, private countryService: CountryService, private router: Router) {
 
   }
 
@@ -61,15 +61,18 @@ export class ContinentComponent implements OnInit {
           }
           this.countryViewModel.push(viewData);
         }
-      )
-      console.log(this.countryViewModel)
+      );
     });
   }
 
-  private countExportImport(operation) {
-    if (operation === 'export') {
+  selectCountryOnTheMap(country: Country): void {
+    this.router.navigate(['detail', country.code]);
+  }
+
+  private countExportImport(operation): void {
+    if (operation === CountryOpsConst.EXPORT) {
       this.exportCount++;
-    } else if (operation === 'import') {
+    } else if (operation === CountryOpsConst.IMPORT) {
       this.importCount++;
     }
   }

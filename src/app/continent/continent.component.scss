@@ -12,7 +12,11 @@
 
 .info-container {
   margin: 1rem 0rem;
-  span:last-child {
-    margin-left: 1rem;
+  span {
+    margin-right: 1rem;
   }
+}
+
+.go-back-button{
+  margin-bottom: 1rem;
 }

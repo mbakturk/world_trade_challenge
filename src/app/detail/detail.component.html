@@ -1,7 +1,7 @@
-<header (selectedCountry)="selectCountryOnTheMap($event)"></header>
+<app-header (selectedCountry)="selectCountryOnTheMap($event.code)"></app-header>
 <div class="container-md">
   <div class="map-container">
-    <world-map [mapData]="mapData" (countryOperation)="handleOperation($event)"></world-map>
+    <app-world-map [mapData]="mapData" (countryOperation)="handleOperation($event)"></app-world-map>
   </div>
   <div class="continent-container list-group">
     <div class="list-group-item list-group-item-success"><b>Continents</b></div>

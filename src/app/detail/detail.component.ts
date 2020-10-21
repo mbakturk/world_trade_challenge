@@ -1,15 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MapEvent} from "./models/map-event";
-import {CountryService} from "../core/services/country.service";
-import {Country, CountryDict} from "../core/models/country";
-import {MapData} from "./models/map-data";
-import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
-import {AddNoteComponent} from "./components/add-note/add-note.component";
-import {ContextMenuComponent} from "./components/context-menu/context-menu.component";
-import {WorldMapComponent} from "./components/world-map/world-map.component";
+import {MapEvent, MapEventConst} from './models/map-event';
+import {CountryService} from '../core/services/country.service';
+import {MapData} from './models/map-data';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {AddNoteComponent} from './components/add-note/add-note.component';
+import {WorldMapComponent} from './components/world-map/world-map.component';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
-  selector: 'detail-page',
+  selector: 'app-detail-page',
   templateUrl: './detail.component.html',
   styleUrls: ['./detail.component.scss']
 })
@@ -21,43 +20,45 @@ export class DetailComponent implements OnInit {
   importCount: number;
   @ViewChild(WorldMapComponent) worldMap: WorldMapComponent;
 
-  constructor(private countryService: CountryService, private modalService: NgbModal) {
+  constructor(private route: ActivatedRoute, private countryService: CountryService, private modalService: NgbModal) {
   }
 
   ngOnInit(): void {
     this.countryCount = this.countryService.getCountyList().length;
     this.updateData();
+    this.route.paramMap.subscribe(params => {
+      const countryCode = params.get('countryCode');
+      if (countryCode) {
+        setTimeout(() => this.selectCountryOnTheMap(countryCode), 500);
+      }
+    });
   }
 
-  selectCountryOnTheMap(country: Country) {
-    this.worldMap.selectCountryByCode(country.code)
+  selectCountryOnTheMap(countryCode: string): void {
+    this.worldMap.selectCountryByCode(countryCode);
   }
 
-  handleOperation(event: MapEvent) {
-    switch (event.operation) {
-      case 'export':
-      case 'import':
-        this.countryService.saveCountyOperation(event.countryCode, event.operation)
-        break;
-      case 'note':
-        this.openAddNoteModal(event.countryCode);
-        break;
-      case 'delete':
-        this.countryService.deleteCountryData(event.countryCode);
-        break;
+  handleOperation(event: MapEvent): void {
+    if (event.operation === MapEventConst.EXPORT || event.operation === MapEventConst.IMPORT) {
+      this.countryService.saveCountyOperation(event.countryCode, event.operation as any);
+      this.updateData();
+    } else if (event.operation === MapEventConst.DELETE) {
+      this.countryService.deleteCountryData(event.countryCode);
+      this.updateData();
+    } else {
+      this.openAddNoteModal(event.countryCode);
     }
-    this.updateData();
   }
 
-  private updateData() {
-    const mapData = {}
+  private updateData(): void {
+    const mapData = {};
     let exportCount = 0;
     let importCount = 0;
     Object.values(this.countryService.getOperationalCountryData())
       .forEach(country => {
           const operation = country.operation;
           if (operation) {
-            if (operation === 'export') {
+            if (operation === MapEventConst.EXPORT) {
               exportCount++;
             } else {
               importCount++;
@@ -66,13 +67,12 @@ export class DetailComponent implements OnInit {
           mapData[country.code] = operation;
         }
       );
-    console.log(mapData)
     this.mapData = mapData;
     this.exportCount = exportCount;
     this.importCount = importCount;
   }
 
-  private openAddNoteModal(countryCode: string) {
+  private openAddNoteModal(countryCode: string): void {
     const modal = this.modalService.open(AddNoteComponent);
     const country = this.countryService.getCountryByCode(countryCode);
     modal.componentInstance.country = country.name;
