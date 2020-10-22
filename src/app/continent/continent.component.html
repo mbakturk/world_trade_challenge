@@ -10,7 +10,7 @@
   </a>
   <h1>{{ title }}</h1>
   <div class="info-container">
-    <span><b>Total Countries: </b>{{ countryViewModel.length }}</span>
+    <span><b>Total Countries: </b>{{ countryViews.length }}</span>
     <span><b>Total Exports: </b>{{ exportCount }}</span>
     <span><b>Total Imports: </b>{{ importCount }}</span>
   </div>
@@ -24,7 +24,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr *ngFor="let view of countryViewModel; index as i">
+      <tr *ngFor="let view of countryViews; index as i">
         <td>{{ view.flag + ' ' + view.country }}</td>
         <td>{{ view.operation || '-' }}</td>
         <td>{{ view.note || 'There is no note for this country'}}</td>

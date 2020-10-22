@@ -17,7 +17,7 @@ const OPERATION_DICT = {
   import: 'Import'
 };
 
-interface CountryViewModel {
+interface CountryView {
   flag: string;
   country: string;
   note?: string;
@@ -32,7 +32,7 @@ interface CountryViewModel {
 export class ContinentComponent implements OnInit {
 
   title: string;
-  countryViewModel: CountryViewModel[] = [];
+  countryViews: CountryView[] = [];
   exportCount = 0;
   importCount = 0;
   private continentCode: string;
@@ -48,7 +48,7 @@ export class ContinentComponent implements OnInit {
       const operationalCountries = this.countryService.getOperationalCountryData();
       const countryList = this.countryService.getCountriesByContinent(this.continentCode);
       countryList.forEach(country => {
-          const viewData: CountryViewModel = {
+          const viewData: CountryView = {
             flag: country.flag,
             country: country.name,
           };
@@ -59,9 +59,11 @@ export class ContinentComponent implements OnInit {
             viewData.operation = OPERATION_DICT[operationalData.operation];
             this.countExportImport(operationalData.operation);
           }
-          this.countryViewModel.push(viewData);
+          this.countryViews.push(viewData);
         }
       );
+
+      this.countryViews = this.countryViews.sort((a, b) => a.country >= b.country ? 1 : -1);
     });
   }
 

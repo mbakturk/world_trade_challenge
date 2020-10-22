@@ -63,8 +63,8 @@ export class DetailComponent implements OnInit {
             } else {
               importCount++;
             }
+            mapData[country.code] = operation;
           }
-          mapData[country.code] = operation;
         }
       );
     this.mapData = mapData;

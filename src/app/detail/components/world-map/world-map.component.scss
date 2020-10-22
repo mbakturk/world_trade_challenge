@@ -2,9 +2,15 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+
 #world-map {
   height: 28rem;
   width: 100%;
+
+  &::ng-deep .jvectormap-container {
+    border-radius: 5px;
+  }
+
 }
 
 
